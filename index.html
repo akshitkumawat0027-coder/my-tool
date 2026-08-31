@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Text Case Converter & Word Counter Tool</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: min(100%, 1000px);
+      margin: auto;
+      padding: 20px;
+    }
+
+    /* Ad Banner Placeholder */
+    .ad-banner {
+      width: 100%;
+      min-height: 100px;
+      margin: 20px 0;
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      font-size: 14px;
+      text-align: center;
+      padding: 15px;
+    }
+
+    .tool-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: clamp(26px, 5vw, 38px);
+      margin-bottom: 10px;
+      color: #111827;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #6b7280;
+      margin-bottom: 30px;
+      font-size: 15px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 280px;
+      resize: vertical;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      padding: 18px;
+      font-size: 16px;
+      line-height: 1.6;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    textarea:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    button {
+      border: none;
+      border-radius: 10px;
+      padding: 14px 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+      background: #2563eb;
+      color: white;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .stat-box {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 26px;
+      font-weight: bold;
+      color: #2563eb;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      .tool-card {
+        padding: 20px;
+      }
+
+      .button-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      textarea {
+        min-height: 220px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .container {
+        padding: 12px;
+      }
+
+      .tool-card {
+        padding: 15px;
+      }
+
+      .button-grid {
+        grid-template-columns: 1fr;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- TOP AD BANNER PLACEHOLDER -->
+    <div class="ad-banner">
+      Top Advertisement Banner<br>
+      <!-- Paste your ad script here -->
+    </div>
+
+
+    <main class="tool-card">
+
+      <h1>Text Case Converter & Word Counter</h1>
+
+      <p class="subtitle">
+        Convert your text into different cases and instantly count words,
+        characters, and sentences.
+      </p>
+
+
+      <textarea
+        id="textInput"
+        placeholder="Type or paste your text here..."
+      ></textarea>
+
+
+      <div class="button-grid">
+        <button onclick="convertUppercase()">UPPERCASE</button>
+
+        <button onclick="convertLowercase()">lowercase</button>
+
+        <button onclick="convertTitleCase()">Title Case</button>
+
+        <button onclick="countText()">Word Count</button>
+      </div>
+
+
+      <div class="stats">
+
+        <div class="stat-box">
+          <span class="stat-number" id="wordCount">0</span>
+          <span class="stat-label">Words</span>
+        </div>
+
+        <div class="stat-box">
+          <span class="stat-number" id="charCount">0</span>
+          <span class="stat-label">Characters</span>
+        </div>
+
+        <div class="stat-box">
+          <span class="stat-number" id="sentenceCount">0</span>
+          <span class="stat-label">Sentences</span>
+        </div>
+
+      </div>
+
+    </main>
+
+
+    <!-- BOTTOM AD BANNER PLACEHOLDER -->
+    <div class="ad-banner">
+      Bottom Advertisement Banner<br>
+      <!-- Paste your ad script here -->
+    </div>
+
+  </div>
+
+
+  <script>
+
+    const textInput = document.getElementById("textInput");
+
+
+    function convertUppercase() {
+      textInput.value = textInput.value.toUpperCase();
+      countText();
+    }
+
+
+    function convertLowercase() {
+      textInput.value = textInput.value.toLowerCase();
+      countText();
+    }
+
+
+    function convertTitleCase() {
+      textInput.value = textInput.value
+        .toLowerCase()
+        .replace(/\b\w/g, function(letter) {
+          return letter.toUpperCase();
+        });
+
+      countText();
+    }
+
+
+    function countText() {
+
+      const text = textInput.value.trim();
+
+      // Word Count
+      const words = text === ""
+        ? 0
+        : text.split(/\s+/).filter(word => word.length > 0).length;
+
+      // Character Count
+      const characters = textInput.value.length;
+
+      // Sentence Count
+      const sentences = text === ""
+        ? 0
+        : text.split(/[.!?]+/)
+            .filter(sentence => sentence.trim().length > 0)
+            .length;
+
+
+      document.getElementById("wordCount").textContent = words;
+
+      document.getElementById("charCount").textContent = characters;
+
+      document.getElementById("sentenceCount").textContent = sentences;
+    }
+
+
+    // Automatically update statistics while typing
+    textInput.addEventListener("input", countText);
+
+  </script>
+
+</body>
+</html>
